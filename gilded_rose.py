@@ -6,7 +6,13 @@ class GildedRose(object):
         self.items = items
 
     def update_quality(self):
+
+
         for item in self.items:
+
+            quality_decrease = 1
+
+
             if item.name == "Sulfuras, Hand of Ragnaros":
                 continue
             elif item.name == "Aged Brie":
@@ -27,9 +33,12 @@ class GildedRose(object):
                     item.quality = min(50, item.quality + quality_increase)
             else:
                 if item.sell_in < 0:
-                    item.quality = max(0, item.quality - 2)
-                else:
-                    item.quality = max(0, item.quality - 1)
+                    quality_decrease *= 2
+
+                if item.name.startswith("Conjured"):
+                    quality_decrease *= 2
+
+                item.quality = max(0, item.quality - quality_decrease)
 
 
 class Item:
